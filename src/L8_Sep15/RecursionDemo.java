@@ -1,5 +1,6 @@
 package L8_Sep15;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -18,10 +19,23 @@ public class RecursionDemo {
 		// printSkips(7);
 		// System.out.println(Factorial(num));
 		// System.out.println(fibonacci(num));
-		int[] arr = { 10, 20, 130, 40, 50 };
+		int[] arr = { 10, 20, 130, 40, 20, 50, 20 };
 		// displayReverse(arr, 0);
 
 		System.out.println(max(arr, 0));
+		System.out.println(findStartIndex(arr, 0, 20));
+		System.out.println(findEndIndex(arr, 0, 20));
+		System.out.println(findAllIndexAL(arr, 0, 20));
+		int[] ans = findAllIndex(arr, 0, 20, 0);
+		for (int val : ans) {
+			System.out.println(val);
+		}
+
+		int i = 4;
+
+		int a = ++i;
+		System.out.println(a + " " + i);
+
 	}
 
 	public static void printDec(int n) {
@@ -154,11 +168,73 @@ public class RecursionDemo {
 		}
 	}
 
-	public static int findStartIndex(int[] arr, int vidx) {
+	public static int findStartIndex(int[] arr, int vidx, int item) {
+
+		if (vidx == arr.length) {
+			return -1;
+		}
+
+		if (arr[vidx] == item) {
+			return vidx;
+		}
+
+		int recAns = findStartIndex(arr, vidx + 1, item);
+
+		return recAns;
 
 	}
 
-	public static int findEndIndex(int[] arr, int vidx) {
+	public static int findEndIndex(int[] arr, int vidx, int item) {
+
+		if (vidx == arr.length) {
+			return -1;
+		}
+
+		int recAns = findEndIndex(arr, vidx + 1, item);
+
+		if (arr[vidx] == item && recAns == -1) {
+			return vidx;
+		} else {
+			return recAns;
+		}
+
+	}
+
+	public static ArrayList<Integer> findAllIndexAL(int[] arr, int vidx, int item) {
+
+		if (vidx == arr.length) {
+			ArrayList<Integer> bres = new ArrayList<>();
+			return bres;
+		}
+
+		ArrayList<Integer> recAns = findAllIndexAL(arr, vidx + 1, item);
+
+		if (arr[vidx] == item) {
+			recAns.add(0, vidx);
+		}
+
+		return recAns;
+
+	}
+
+	public static int[] findAllIndex(int[] arr, int vidx, int item, int count) {
+
+		if (vidx == arr.length) {
+
+			int[] bres = new int[count];
+			return bres;
+		}
+
+		int[] recAns;
+
+		if (arr[vidx] == item) {
+			recAns = findAllIndex(arr, vidx + 1, item, count + 1);
+			recAns[count] = vidx;
+		} else {
+			recAns = findAllIndex(arr, vidx + 1, item, count);
+		}
+
+		return recAns;
 
 	}
 
