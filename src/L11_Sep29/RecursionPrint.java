@@ -1,4 +1,4 @@
-package L10_Sep29;
+package L11_Sep29;
 
 import L9_Sep16.RecursionGet;
 
@@ -13,15 +13,15 @@ public class RecursionPrint {
 
 	public static void main(String[] args) {
 
-//		printSS("abc", "");
-//		printSSAscii("abc", "");
-//		printKPC("145", "");
-//		printCoinToss(3, "");
+		// printSS("abc", "");
+		// printSSAscii("abc", "");
+		// printKPC("145", "");
+		// printCoinToss(3, "");
 
-//		printPermutation("abc", "");
-//		printPermutation2("abc", "");
-//		System.out.println(boardPath(0, 10, ""));
-//		System.out.println(mazePath(0, 0, 2, 2, ""));
+		// printPermutation("abc", "");
+		// printPermutation2("abc", "");
+		// System.out.println(boardPath(0, 10, ""));
+		// System.out.println(mazePath(0, 0, 2, 2, ""));
 
 		lexicoCounting(2, 1000);
 	}

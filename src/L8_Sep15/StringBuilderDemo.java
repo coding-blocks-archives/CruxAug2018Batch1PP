@@ -18,6 +18,7 @@ public class StringBuilderDemo {
 		System.out.println(end - start);
 
 		Scanner scn = new Scanner(System.in);
+		
 		// convert string to sb
 		String str = scn.next();
 		StringBuilder sb = new StringBuilder(str);
