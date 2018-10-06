@@ -1,5 +1,7 @@
 package L13_Oct2;
 
+import java.util.Arrays;
+
 /**
  * @author Garima Chhikara
  * @email garima.chhikara@codingblocks.com
@@ -25,7 +27,9 @@ public class TimeSpace {
 		// System.out.println(end - start);
 
 		// System.out.println(polynomial(3, 5));
-		System.out.println(countPalindromicSS("abcbdbb")); // 10
+		// System.out.println(countPalindromicSS("abcbdbb")); // 10
+
+		SOE(25);
 	}
 
 	public static void bubblesort(int[] arr) {
@@ -135,8 +139,33 @@ public class TimeSpace {
 		return ans;
 	}
 
-	
-	
-	
-	
+	public static void SOE(int n) {
+
+		boolean[] primes = new boolean[n + 1];
+
+		Arrays.fill(primes, true);
+
+		primes[0] = false;
+		primes[1] = false;
+
+		for (int table = 2; table * table <= n; table++) {
+
+			if (primes[table] == false) {
+				continue;
+			}
+
+			for (int multiplier = 2; multiplier * table <= n; multiplier++) {
+				primes[table * multiplier] = false;
+			}
+
+		}
+
+		for (int i = 0; i < primes.length; i++) {
+			if (primes[i] == true) {
+				System.out.println(i);
+			}
+		}
+
+	}
+
 }
