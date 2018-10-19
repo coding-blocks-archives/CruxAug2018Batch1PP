@@ -265,4 +265,180 @@ public class LinkedList {
 
 	}
 
+	public void reverseDI() throws Exception {
+
+		int left = 0;
+		int right = this.size - 1;
+
+		// n^2
+		while (left < right) {
+
+			Node ln = getNodeAt(left);
+			Node rn = getNodeAt(right);
+
+			int temp = ln.data; // 10
+			ln.data = rn.data; // ln.data = 60
+			rn.data = temp; // rn.data = 10
+
+			left++;
+			right--;
+		}
+
+	}
+
+	public void reversePI() {
+
+		Node prev = this.head;
+		Node curr = prev.next;
+
+		while (curr != null) {
+
+			Node ahead = curr.next;
+
+			// links change
+			curr.next = prev;
+
+			// update
+			prev = curr;
+			curr = ahead;
+
+		}
+
+		Node temp = this.head;
+		this.head = this.tail;
+		this.tail = temp;
+
+		this.tail.next = null;
+
+	}
+
+	public void reversePR() {
+		reversePR(this.head, this.head.next);
+
+		Node temp = this.head;
+		this.head = this.tail;
+		this.tail = temp;
+
+		this.tail.next = null;
+
+	}
+
+	private void reversePR(Node prev, Node curr) {
+
+		if (curr == null) {
+			return;
+
+		}
+
+		// Node ahead = curr.next;
+		// curr.next = prev;
+		// reversePR(curr, ahead);
+
+		reversePR(curr, curr.next);
+		curr.next = prev;
+	}
+
+	public void reverseDRReturn() {
+		reverseDRReturn(this.head, this.head, 0);
+
+	}
+
+	private Node reverseDRReturn(Node left, Node right, int count) {
+
+		if (right == null) {
+			return left;
+		}
+
+		left = reverseDRReturn(left, right.next, count + 1);
+
+		if (count >= size / 2) {
+			int temp = left.data;
+			left.data = right.data;
+			right.data = temp;
+		}
+
+		return left.next;
+
+	}
+
+	private class HeapMover {
+		Node left;
+	}
+
+	public void reverseDRHeap() {
+
+		HeapMover mover = new HeapMover();
+		mover.left = this.head;
+
+		reverseDRHeap(mover, this.head, 0);
+	}
+
+	private void reverseDRHeap(HeapMover mover, Node right, int count) {
+
+		if (right == null) {
+			return;
+		}
+
+		reverseDRHeap(mover, right.next, count + 1);
+
+		if (count >= this.size / 2) {
+			int temp = mover.left.data;
+			mover.left.data = right.data;
+			right.data = temp;
+		}
+
+		mover.left = mover.left.next;
+
+	}
+
+	public void fold() {
+		HeapMover mover = new HeapMover();
+		mover.left = this.head;
+		fold(mover, this.head, 0);
+	}
+
+	private void fold(HeapMover mover, Node right, int count) {
+
+		if (right == null) {
+			return;
+		}
+
+		fold(mover, right.next, count + 1);
+
+		if (count > this.size / 2) {
+			Node ahead = mover.left.next;
+
+			// links
+			mover.left.next = right;
+			right.next = ahead;
+
+			// mover update
+			mover.left = ahead;
+		}
+
+		if (count == this.size / 2) {
+			this.tail = right;
+			this.tail.next = null;
+		}
+
+	}
+
+	public int kthFromLast(int k) {
+
+		Node slow = this.head;
+		Node fast = this.head;
+
+		for (int i = 1; i <= k; i++) {
+			fast = fast.next;
+		}
+
+		while (fast != null) {
+			fast = fast.next;
+			slow = slow.next;
+		}
+
+		return slow.data;
+
+	}
+
 }

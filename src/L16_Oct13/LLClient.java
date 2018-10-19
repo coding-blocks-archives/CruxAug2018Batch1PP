@@ -35,14 +35,26 @@ public class LLClient {
 
 		list.display();
 
-		System.out.println(list.removeFirst());
-		System.out.println(list.removeLast());
+		// System.out.println(list.removeFirst());
+		// System.out.println(list.removeLast());
 		list.display();
 
-//		list.removeAt(list.size() - 1);
+		list.removeAt(list.size() - 1);
 		list.display();
 
-		System.out.println(list.mid());
+		// System.out.println(list.mid());
+
+		// list.reverseDI();
+		// list.display();
+		//
+		// list.reversePI();
+		// list.display();
+
+		// list.reverseDRHeap();
+		list.fold();
+		list.display();
+
+		System.out.println(list.kthFromLast(5));
 
 	}
 
