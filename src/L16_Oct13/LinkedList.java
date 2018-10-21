@@ -18,10 +18,12 @@ public class LinkedList {
 	private Node tail;
 	private int size;
 
+	// O(1)
 	public int size() {
 		return this.size;
 	}
 
+	// O(1)
 	public boolean isEmpty() {
 		return this.size() == 0;
 	}
@@ -42,6 +44,7 @@ public class LinkedList {
 		System.out.println("----------------------------");
 	}
 
+	// O(1)
 	public int getFirst() throws Exception {
 
 		if (this.size() == 0) {
@@ -51,6 +54,7 @@ public class LinkedList {
 		return this.head.data;
 	}
 
+	// O(1)
 	public int getLast() throws Exception {
 
 		if (this.size() == 0) {
@@ -60,6 +64,7 @@ public class LinkedList {
 		return this.tail.data;
 	}
 
+	// O(n)
 	public int getAt(int k) throws Exception {
 
 		if (this.size() == 0) {
@@ -80,6 +85,7 @@ public class LinkedList {
 
 	}
 
+	// O(n)
 	private Node getNodeAt(int k) throws Exception {
 
 		if (this.size() == 0) {
@@ -100,6 +106,7 @@ public class LinkedList {
 
 	}
 
+	// O(1)
 	public void addLast(int item) {
 
 		// create a new node
@@ -123,6 +130,7 @@ public class LinkedList {
 
 	}
 
+	// O(1)
 	public void addFirst(int item) {
 
 		// create a new node
@@ -146,6 +154,7 @@ public class LinkedList {
 
 	}
 
+	// O(n)
 	public void addAt(int item, int k) throws Exception {
 
 		if (k < 0 || k > this.size()) {
@@ -176,6 +185,7 @@ public class LinkedList {
 
 	}
 
+	// O(1)
 	public int removeFirst() throws Exception {
 
 		if (this.size == 0) {
@@ -197,6 +207,7 @@ public class LinkedList {
 
 	}
 
+	// O(n)
 	public int removeLast() throws Exception {
 
 		if (this.size == 0) {
@@ -222,6 +233,7 @@ public class LinkedList {
 
 	}
 
+	// O(n)
 	public int removeAt(int k) throws Exception {
 
 		if (this.size == 0) {
