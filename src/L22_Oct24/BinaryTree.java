@@ -1,6 +1,8 @@
 package L22_Oct24;
 
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * @author Garima Chhikara
@@ -58,6 +60,73 @@ public class BinaryTree {
 		if (hrc) {
 			nn.right = takeInput(nn, false);
 		}
+
+		return nn;
+
+	}
+
+	public BinaryTree(int[] pre, int[] in) {
+
+		this.root = construct1(pre, 0, pre.length - 1, in, 0, in.length - 1);
+	}
+
+	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
+
+		if (plo > phi || ilo > ihi) {
+			return null;
+		}
+
+		Node nn = new Node();
+		nn.data = pre[plo];
+
+		int si = -1;
+
+		// search for pre[plo] in inorder
+		for (int i = ilo; i <= ihi; i++) {
+			if (pre[plo] == in[i]) {
+				si = i;
+				break;
+			}
+		}
+
+		int nel = si - ilo;
+
+		// left
+		nn.left = construct(pre, plo + 1, plo + nel, in, ilo, si - 1);
+
+		// right
+		nn.right = construct(pre, plo + nel + 1, phi, in, si + 1, ihi);
+
+		return nn;
+
+	}
+
+	private Node construct1(int[] post, int plo, int phi, int[] in, int ilo, int ihi) {
+
+		if (plo > phi || ilo > ihi) {
+			return null;
+		}
+
+		Node nn = new Node();
+		nn.data = post[phi];
+
+		int si = -1;
+
+		// search for pre[plo] in inorder
+		for (int i = ilo; i <= ihi; i++) {
+			if (post[phi] == in[i]) {
+				si = i;
+				break;
+			}
+		}
+
+		int nel = si - ilo;
+
+		// left
+		nn.left = construct(post, plo, plo + nel - 1, in, ilo, si - 1);
+
+		// right
+		nn.right = construct(post, plo + nel, phi - 1, in, si + 1, ihi);
 
 		return nn;
 
@@ -332,6 +401,56 @@ public class BinaryTree {
 		postorder(node.right);
 
 		System.out.print(node.data + " ");
+
+	}
+
+	private class Pair {
+		Node node;
+		boolean selfDone;
+		boolean leftDone;
+		boolean rightDone;
+	}
+
+	public void preOrderI() {
+
+		LinkedList<Pair> stack = new LinkedList<>();
+
+		Pair sp = new Pair();
+		sp.node = this.root;
+
+		stack.addFirst(sp);
+
+		while (!stack.isEmpty()) {
+
+			Pair tp = stack.getFirst();
+
+			if (tp.node == null) {
+				stack.removeFirst();
+				continue;
+			}
+
+			if (tp.selfDone == false) {
+				System.out.print(tp.node.data + " ");
+				tp.selfDone = true;
+			} else if (tp.leftDone == false) {
+				Pair np = new Pair();
+				np.node = tp.node.left;
+				stack.addFirst(np);
+
+				tp.leftDone = true;
+			} else if (tp.rightDone == false) {
+				Pair np = new Pair();
+				np.node = tp.node.right;
+				stack.addFirst(np);
+
+				tp.rightDone = true;
+			} else {
+				stack.removeFirst();
+			}
+
+		}
+
+		System.out.println();
 
 	}
 
