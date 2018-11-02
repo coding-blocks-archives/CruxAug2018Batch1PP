@@ -208,4 +208,88 @@ public class BST {
 
 	}
 
+	public void add(int item) {
+		add(this.root, item);
+	}
+
+	private void add(Node node, int item) {
+
+		// right
+		if (item > node.data) {
+
+			if (node.right != null) {
+				add(node.right, item);
+			} else {
+
+				Node nn = new Node();
+				nn.data = item;
+
+				node.right = nn;
+			}
+
+		} else {
+
+			if (node.left != null) {
+				add(node.left, item);
+			} else {
+
+				Node nn = new Node();
+				nn.data = item;
+
+				node.left = nn;
+			}
+
+		}
+
+	}
+
+	public void remove(int item) {
+		remove(this.root, null, item);
+	}
+
+	private void remove(Node node, Node parent, int item) {
+
+		if (item < node.data) {
+			remove(node.left, node, item);
+		} else if (item > node.data) {
+			remove(node.right, node, item);
+		} else {
+
+			if (node.left == null && node.right == null) {
+				if (node.data <= parent.data) {
+					parent.left = null;
+				} else {
+					parent.right = null;
+				}
+			}
+
+			else if (node.left != null && node.right == null) {
+
+				if (node.data <= parent.data) {
+					parent.left = node.left;
+				} else {
+					parent.right = node.left;
+				}
+			}
+
+			else if (node.left == null && node.right != null) {
+
+				if (node.data <= parent.data) {
+					parent.left = node.right;
+				} else {
+					parent.right = node.right;
+				}
+			} else {
+
+				int lmax = max(node.left);
+				remove(node.left, node, lmax);
+
+				node.data = lmax;
+
+			}
+
+		}
+
+	}
+
 }
