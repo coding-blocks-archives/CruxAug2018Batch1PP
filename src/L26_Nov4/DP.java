@@ -44,10 +44,23 @@ public class DP {
 		// int[arr.length][arr.length]));
 		// System.out.println(WineProblemBU(arr));
 
-		int[] arr = { 2, 3, 4, 5, 6 };
-		System.out.println(MCM(arr, 0, arr.length - 1));
-		System.out.println(MCMTD(arr, 0, arr.length - 1, new int[arr.length][arr.length]));
-		System.out.println(MCMBU(arr));
+		// int[] arr = { 2, 3, 4, 5, 6 };
+		// System.out.println(MCM(arr, 0, arr.length - 1));
+		// System.out.println(MCMTD(arr, 0, arr.length - 1, new
+		// int[arr.length][arr.length]));
+		// System.out.println(MCMBU(arr));
+
+		int[] wt = { 1, 3, 4, 5 };
+		int[] prices = { 1, 4, 5, 7 };
+		int cap = 70;
+
+		// System.out.println(KnapsackTD(wt, prices, 0, cap, new int[wt.length][cap +
+		// 1]));
+		// System.out.println(KnapsackBU(wt, prices, cap));
+
+		int[] arr = { 40, 60, 20 };
+		System.out.println(Mixtures(arr, 0, arr.length - 1, new int[arr.length][arr.length]));
+		System.out.println(MixturesBU(arr));
 
 		long end = System.currentTimeMillis();
 
@@ -498,6 +511,148 @@ public class DP {
 				strg[si][ei] = min;
 
 			}
+		}
+
+		return strg[0][n - 1];
+
+	}
+
+	public static int KnapsackTD(int[] wt, int[] prices, int vidx, int cap, int[][] strg) {
+
+		if (vidx == wt.length) {
+			return 0;
+		}
+
+		if (strg[vidx][cap] != 0) {
+			return strg[vidx][cap];
+		}
+
+		int include = 0;
+
+		if (cap >= wt[vidx]) {
+			include = KnapsackTD(wt, prices, vidx + 1, cap - wt[vidx], strg) + prices[vidx];
+		}
+
+		int exclude = KnapsackTD(wt, prices, vidx + 1, cap, strg);
+
+		int ans = Math.max(include, exclude);
+
+		strg[vidx][cap] = ans;
+
+		return ans;
+
+	}
+
+	public static int KnapsackBU(int[] wt, int[] prices, int cap) {
+
+		int nr = wt.length + 1;
+		int nc = cap + 1;
+
+		int[][] strg = new int[nr][nc];
+
+		for (int row = 0; row < nr; row++) {
+
+			for (int col = 0; col < nc; col++) {
+
+				if (row == 0 || col == 0) {
+					strg[row][col] = 0;
+				} else {
+
+					int include = 0;
+					if (col >= wt[row - 1]) {
+						include = prices[row - 1] + strg[row - 1][col - wt[row - 1]];
+					}
+
+					int exclude = strg[row - 1][col];
+
+					int ans = Math.max(include, exclude);
+
+					strg[row][col] = ans;
+
+				}
+
+			}
+		}
+
+		return strg[nr - 1][nc - 1];
+
+	}
+
+	public static int color(int[] arr, int si, int ei) {
+		int sum = 0;
+
+		for (int i = si; i <= ei; i++) {
+			sum += arr[i];
+		}
+
+		return sum % 100;
+	}
+
+	public static int Mixtures(int[] arr, int si, int ei, int[][] strg) {
+
+		if (si >= ei) {
+			return 0;
+		}
+
+		if (strg[si][ei] != 0) {
+			return strg[si][ei];
+		}
+
+		int min = Integer.MAX_VALUE;
+
+		for (int k = si; k <= ei - 1; k++) {
+
+			int fc = Mixtures(arr, si, k, strg);
+			int sc = Mixtures(arr, k + 1, ei, strg);
+
+			int sw = color(arr, si, k) * color(arr, k + 1, ei);
+
+			int ta = fc + sc + sw;
+
+			if (ta < min) {
+				min = ta;
+			}
+
+		}
+
+		strg[si][ei] = min;
+
+		return min;
+
+	}
+
+	public static int MixturesBU(int[] arr) {
+
+		int n = arr.length;
+		int[][] strg = new int[n][n];
+
+		for (int slide = 1; slide <= n - 1; slide++) {
+
+			for (int si = 0; si <= n - slide - 1; si++) {
+
+				int ei = si + slide;
+
+				int min = Integer.MAX_VALUE;
+
+				for (int k = si; k <= ei - 1; k++) {
+
+					int fc = strg[si][k];
+					int sc = strg[k + 1][ei];
+
+					int sw = color(arr, si, k) * color(arr, k + 1, ei);
+
+					int ta = fc + sc + sw;
+
+					if (ta < min) {
+						min = ta;
+					}
+
+				}
+
+				strg[si][ei] = min;
+
+			}
+
 		}
 
 		return strg[0][n - 1];
