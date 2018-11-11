@@ -1,4 +1,4 @@
-package L28_Nov11;
+package L28_Nov11.OOPS_Story5;
 
 /**
  * @author Garima Chhikara
@@ -12,7 +12,7 @@ public class Stack extends DS {
 	@Override
 	public void display() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

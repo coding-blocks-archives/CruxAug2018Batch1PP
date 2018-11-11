@@ -1,4 +1,4 @@
-package L27_Nov10;
+package L27_Nov10.OOPS_Story4;
 
 /**
  * @author Garima Chhikara
@@ -10,8 +10,7 @@ package L27_Nov10;
 public class Client {
 
 	public static void main(String[] args) {
-		
-		DS ds = new DS() ;
-		ds.a = 90 ;
+
+		Stack ds = new DynamicStack();
 	}
 }

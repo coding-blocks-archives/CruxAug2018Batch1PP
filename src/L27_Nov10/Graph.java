@@ -1,6 +1,8 @@
 package L27_Nov10;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * @author Garima Chhikara
@@ -115,8 +117,8 @@ public class Graph {
 
 	public boolean hasPath(String src, String dst, HashMap<String, Boolean> processed) {
 
-		processed.put(src, true) ;
-		
+		processed.put(src, true);
+
 		// self work
 		if (containsEdge(src, dst)) {
 			return true;
@@ -132,6 +134,492 @@ public class Graph {
 		}
 
 		return false;
+	}
+
+	private class Pair {
+		String vname;
+		String psf;
+
+		String color;
+	}
+
+	public boolean bfs(String src, String dst) {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		// make a starting pair and put in queue
+		Pair sp = new Pair();
+		sp.psf = src;
+		sp.vname = src;
+		queue.addLast(sp);
+
+		// work till queue is not empty
+		while (!queue.isEmpty()) {
+
+			// remove the pair from queue
+			Pair rp = queue.removeFirst();
+
+			// ignore the second C
+			if (processed.containsKey(rp.vname)) {
+				continue;
+			}
+
+			// processed true
+			processed.put(rp.vname, true);
+
+			// direct edge : if present then return true
+			if (containsEdge(rp.vname, dst)) {
+				System.out.println(rp.psf + dst);
+				return true;
+			}
+
+			// loop on nbrs
+			Vertex vtx = vtces.get(rp.vname);
+
+			for (String nbr : vtx.nbrs.keySet()) {
+
+				// process only those nbrs which are unprocessed
+				if (!processed.containsKey(nbr)) {
+
+					Pair np = new Pair();
+					np.vname = nbr;
+					np.psf = rp.psf + nbr;
+
+					// put the nbr pair in queue
+					queue.addLast(np);
+				}
+			}
+		}
+
+		return false;
+
+	}
+
+	public boolean dfs(String src, String dst) {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> stack = new LinkedList<>();
+
+		// make a starting pair and put in queue
+		Pair sp = new Pair();
+		sp.psf = src;
+		sp.vname = src;
+		stack.addFirst(sp);
+
+		// work till queue is not empty
+		while (!stack.isEmpty()) {
+
+			// remove the pair from queue
+			Pair rp = stack.removeFirst();
+
+			// ignore the second C
+			if (processed.containsKey(rp.vname)) {
+				continue;
+			}
+
+			// processed true
+			processed.put(rp.vname, true);
+
+			// direct edge : if present then return true
+			if (containsEdge(rp.vname, dst)) {
+				System.out.println(rp.psf + dst);
+				return true;
+			}
+
+			// loop on nbrs
+			Vertex vtx = vtces.get(rp.vname);
+
+			for (String nbr : vtx.nbrs.keySet()) {
+
+				// process only those nbrs which are unprocessed
+				if (!processed.containsKey(nbr)) {
+
+					Pair np = new Pair();
+					np.vname = nbr;
+					np.psf = rp.psf + nbr;
+
+					// put the nbr pair in queue
+					stack.addFirst(np);
+				}
+			}
+		}
+
+		return false;
+
+	}
+
+	public void bft() {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			queue.addLast(sp);
+
+			// work till queue is not empty
+			while (!queue.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = queue.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+
+				// processed true
+				processed.put(rp.vname, true);
+
+				// syso
+				System.out.println(rp.vname + " via " + rp.psf);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+
+						// put the nbr pair in queue
+						queue.addLast(np);
+					}
+				}
+			}
+
+		}
+
+	}
+
+	public void dft() {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> stack = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			stack.addFirst(sp);
+
+			// work till queue is not empty
+			while (!stack.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = stack.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+
+				// processed true
+				processed.put(rp.vname, true);
+
+				// syso
+				System.out.println(rp.vname + " via " + rp.psf);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+
+						// put the nbr pair in queue
+						stack.addFirst(np);
+					}
+				}
+			}
+
+		}
+
+	}
+
+	public boolean isConnected() {
+
+		int flag = 0;
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+			flag++;
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			queue.addLast(sp);
+
+			// work till queue is not empty
+			while (!queue.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = queue.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+
+				// processed true
+				processed.put(rp.vname, true);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+
+						// put the nbr pair in queue
+						queue.addLast(np);
+					}
+				}
+			}
+
+		}
+
+		return flag == 1;
+
+	}
+
+	public boolean isCyclic() {
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			queue.addLast(sp);
+
+			// work till queue is not empty
+			while (!queue.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = queue.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+					return true;
+				}
+
+				// processed true
+				processed.put(rp.vname, true);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+
+						// put the nbr pair in queue
+						queue.addLast(np);
+					}
+				}
+			}
+
+		}
+
+		return false;
+
+	}
+
+	public boolean isTree() {
+		return isConnected() && !isCyclic();
+	}
+
+	public ArrayList<ArrayList<String>> getCC() {
+
+		ArrayList<ArrayList<String>> ans = new ArrayList<>();
+
+		HashMap<String, Boolean> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+
+			ArrayList<String> subans = new ArrayList<>();
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			queue.addLast(sp);
+
+			// work till queue is not empty
+			while (!queue.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = queue.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+					continue;
+				}
+
+				// processed true
+				processed.put(rp.vname, true);
+
+				// syso
+				subans.add(rp.vname);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+
+						// put the nbr pair in queue
+						queue.addLast(np);
+					}
+				}
+			}
+
+			ans.add(subans);
+		}
+
+		return ans;
+	}
+
+	public boolean isBipartite() {
+
+		HashMap<String, String> processed = new HashMap<>();
+
+		// make queue using ll
+		LinkedList<Pair> queue = new LinkedList<>();
+
+		for (String key : vtces.keySet()) {
+
+			if (processed.containsKey(key)) {
+				continue;
+			}
+
+			// make a starting pair and put in queue
+			Pair sp = new Pair();
+			sp.psf = key;
+			sp.vname = key;
+			sp.color = "r";
+			queue.addLast(sp);
+
+			// work till queue is not empty
+			while (!queue.isEmpty()) {
+
+				// remove the pair from queue
+				Pair rp = queue.removeFirst();
+
+				// ignore the second C
+				if (processed.containsKey(rp.vname)) {
+
+					String oc = processed.get(rp.vname);
+					String nc = rp.color;
+
+					if (!oc.equals(nc)) {
+						return false;
+					}
+
+					continue;
+				}
+
+				// processed true
+				processed.put(rp.vname, rp.color);
+
+				// loop on nbrs
+				Vertex vtx = vtces.get(rp.vname);
+
+				for (String nbr : vtx.nbrs.keySet()) {
+
+					// process only those nbrs which are unprocessed
+					if (!processed.containsKey(nbr)) {
+
+						String color = rp.color == "r" ? "g" : "r";
+
+						Pair np = new Pair();
+						np.vname = nbr;
+						np.psf = rp.psf + nbr;
+						np.color = color;
+
+						// put the nbr pair in queue
+						queue.addLast(np);
+					}
+				}
+			}
+
+		}
+
+		return true;
 	}
 
 }

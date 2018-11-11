@@ -1,4 +1,4 @@
-package L27_Nov10;
+package L27_Nov10.OOPS_Story4;
 
 /**
  * @author Garima Chhikara
@@ -9,13 +9,13 @@ package L27_Nov10;
 
 public class Stack {
 
-	int a;
+	final int a;
 
 	public Stack() {
 		a = 2;
 	}
 
-	public void test() {
+	public final void test() {
 
 		System.out.println(a);
 	}

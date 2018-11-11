@@ -36,12 +36,23 @@ public class GraphClient {
 		System.out.println(graph.noOfEdges());
 		System.out.println(graph.noOfVertex());
 
-		graph.removeEdge("D", "E");
+		// graph.removeEdge("B", "C");
+		// graph.removeEdge("F", "G");
 		// graph.removeVertex("A");
 		graph.display();
 
-		System.out.println(graph.hasPath("A", "F", new HashMap<>()));
+		// System.out.println(graph.hasPath("A", "F", new HashMap<>()));
+		// System.out.println(graph.bfs("A", "F"));
+		// System.out.println(graph.dfs("A", "F"));
 
+		// graph.dft();
+
+		System.out.println(graph.isConnected());
+		System.out.println(graph.isCyclic());
+		System.out.println(graph.isTree());
+		System.out.println(graph.getCC());
+
+		System.out.println(graph.isBipartite());
 	}
 
 }
